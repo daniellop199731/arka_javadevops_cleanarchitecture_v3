@@ -17,12 +17,12 @@ public class TestController {
     }
 
     @GetMapping("/{text}")
-    public String testPath(@PathVariable String text) {
+    public String testPath(@PathVariable("text") String text) {
         return "Hello, this is a test endpoint with path-parameter: " + text;
     }
     
     @GetMapping("/with-param")
-    public String testParam(@RequestParam String param) {
+    public String testParam(@RequestParam("param") String param) {
         return "Hello, this is a test endpoint with request-parameter: " + param;
     }
 
