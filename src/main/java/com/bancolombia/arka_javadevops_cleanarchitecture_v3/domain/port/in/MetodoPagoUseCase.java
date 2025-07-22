@@ -9,7 +9,7 @@ public interface MetodoPagoUseCase {
     MetodoPago getMetodoPagoById(int idMetodoPago);
     MetodoPago createMetodoPago(MetodoPago metodoPago);
     MetodoPago updateMetodoPago(int idMetodoPago, MetodoPago metodoPago);
-    MetodoPago deleteMetodoPagoById(int idMetodoPago);
+    boolean deleteMetodoPagoById(int idMetodoPago);
 
 }
 
