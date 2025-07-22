@@ -24,7 +24,7 @@ public class MetodoPagoUsuarioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @JsonIgnore
     @ManyToOne
