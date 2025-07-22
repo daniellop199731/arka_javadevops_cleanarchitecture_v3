@@ -11,6 +11,7 @@ public interface UsuarioUserCase {
     Usuario updateUsuario(int idUsuario, Usuario usuario);
     boolean deleteUsuario(int idUsuario);
     Usuario getUsuarioByIdentificacion(String identificacionUsuario);
+    boolean canUpdateUsuario(String identificacionUsuario, int idUsuario);
     
 }
 

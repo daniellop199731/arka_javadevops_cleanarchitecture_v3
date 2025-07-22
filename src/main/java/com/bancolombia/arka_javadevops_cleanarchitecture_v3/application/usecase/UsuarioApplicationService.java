@@ -40,18 +40,18 @@ public class UsuarioApplicationService implements UsuarioUserCase {
 
     @Override
     public Usuario updateUsuario(int idUsuario, Usuario usuario) {   
-        Usuario usuarioFindedByIdentificacion = this.getUsuarioByIdentificacion(usuario.getIdentificacionUsuario());
-        boolean existsById = usuarioRepositoryPort.existsById(idUsuario);
-        if(usuarioFindedByIdentificacion.getIdUsuario() == 0 && existsById){
+        Optional<Usuario> usuarioFindedById = usuarioRepositoryPort.findById(idUsuario);
+        
+        if(!usuarioFindedById.isPresent()){
+            return new Usuario();
+        }
+
+        if(this.canUpdateUsuario(usuario.getIdentificacionUsuario(), idUsuario)){
             usuario.setIdUsuario(idUsuario);
             return usuarioRepositoryPort.save(usuario);
         }
-
-        if(!existsById){
-            throw new RuntimeException("Usuario not found with id: " + idUsuario);
-        }
         
-        return usuarioFindedByIdentificacion;
+        return usuarioFindedById.get();
     }
 
     @Override
@@ -70,6 +70,27 @@ public class UsuarioApplicationService implements UsuarioUserCase {
             return usuarioFinded.get();
         }
         return new Usuario();
+    }
+
+    @Override
+    public boolean canUpdateUsuario(String identificacionUsuario, int idUsuario) {
+        /**
+         * El usuario se puede actualizar si:
+         * 1. La identificacion nueva no existe en la base de datos
+         * 2. Si la identificacion nueva existe, debe ser del mismo usuario
+         *    (es decir, el idUsuario debe coincidir con el id del usuario encontrado
+         */
+
+        Optional<Usuario> usuarioFinded = usuarioRepositoryPort.findByIdentificacion(identificacionUsuario);
+        if(usuarioFinded.isPresent()){
+            //Indica que la identificacion ya existe
+            //Se debe validar si existe para el mismo id de usuario
+            if(usuarioFinded.get().getIdUsuario() == idUsuario){
+                return true;
+            }
+            return false;
+        }
+        return true;
     }
     
 }

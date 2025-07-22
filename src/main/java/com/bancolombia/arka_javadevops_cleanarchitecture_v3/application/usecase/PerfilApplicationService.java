@@ -1,6 +1,8 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.application.usecase;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Perfil;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.PerfilUseCase;
@@ -23,7 +25,11 @@ public class PerfilApplicationService implements PerfilUseCase {
 
     @Override
     public Perfil getPerfilById(int idPerfil) {
-        return perfilRepository.findById(idPerfil).get();
+        Optional<Perfil> perfilOptional = perfilRepository.findById(idPerfil);
+        if(perfilOptional.isPresent()){
+            return perfilOptional.get();
+        }
+        return new Perfil();
     }
 
     @Override
@@ -36,9 +42,8 @@ public class PerfilApplicationService implements PerfilUseCase {
         if(perfilRepository.existsById(idPerfil)){
             perfil.setIdPerfil(idPerfil); // Aseguramos que el ID sea el correcto
             return perfilRepository.save(perfil);
-        } else {
-            throw new RuntimeException("Perfil not found with id: " + idPerfil);
-        }   
+        }
+        return new Perfil(); // Retornamos un objeto vacío si no existe el perfil   
     }
 
     @Override
@@ -46,9 +51,8 @@ public class PerfilApplicationService implements PerfilUseCase {
         if(perfilRepository.existsById(idPerfil)){
             perfilRepository.deleteById(idPerfil);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
 }

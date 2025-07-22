@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PerfilDto {
 
-    private Integer idPerfil = null;
+    private int idPerfil;
 
     @NotBlank(message = "El nombre del perfil no puede estar vacío")
     @NotNull(message = "El nombre del perfil no puede ser nulo")
