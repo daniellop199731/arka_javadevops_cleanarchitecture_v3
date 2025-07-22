@@ -8,6 +8,7 @@ import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.Metod
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.dto.MetodoPagoDto;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.mapper.MetodoPagoWebMapper;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class MetodoPagoController {
     }
     
     @PostMapping("/createMetodoPago")
-    public ResponseEntity<MetodoPagoDto> cretaeMetodoPago(@RequestBody MetodoPagoDto metodoPagoDto) {
+    public ResponseEntity<MetodoPagoDto> cretaeMetodoPago(@Valid @RequestBody MetodoPagoDto metodoPagoDto) {
         MetodoPago metodoPagoSaved = metodoPagoUseCase.createMetodoPago(mapper.toModel(metodoPagoDto));
         MetodoPagoDto metodoPagoSavedDto = mapper.toDto(metodoPagoSaved);
         return ResponseEntity.status(HttpStatus.CREATED).body(metodoPagoSavedDto);
@@ -66,8 +67,5 @@ public class MetodoPagoController {
         }
         return ResponseEntity.notFound().build();
     }
-    
-    
-
 }
 

@@ -1,6 +1,5 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.dto;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -16,7 +15,6 @@ public class MetodoPagoDto {
 
     @NotBlank(message = "El nombre del método de pago no puede estar vacío")
     @NotNull(message = "El nombre del método de pago no puede ser nulo")
-    @Max(value = 45, message = "El nombre del método de pago no puede exceder los 45 caracteres")
     private String nombreMetodoPago;
 
 }
