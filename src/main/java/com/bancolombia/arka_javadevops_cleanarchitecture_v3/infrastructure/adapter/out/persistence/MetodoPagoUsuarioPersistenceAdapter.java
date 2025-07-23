@@ -1,6 +1,7 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.out.persistence;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -42,9 +43,18 @@ public class MetodoPagoUsuarioPersistenceAdapter implements MetodoPagoUsuarioRep
     }
 
     @Override
-    public MetodoPagoUsuario update(int id, MetodoPagoUsuario metodoPagoUsuario) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public Optional<MetodoPagoUsuario> findByIdUsuarioAndIdMetodoPago(int idUsuarioMetodoPago, int idMetodoPago){
+        return repository.findByUsuarioAndMetodoPago(idUsuarioMetodoPago, idMetodoPago).map(metodoPagoUsuarioMapper::toModel);
+    }
+
+    @Override
+    public boolean existByIdUsuarioAndMetodoPago(int idUsuarioMetodoPago, int idMetodoPago) {
+        return repository.findByUsuarioAndMetodoPago(idUsuarioMetodoPago, idMetodoPago).isPresent();
+    }
+
+    @Override
+    public void deleteById(int idMetodoPagoUsuario) {
+        repository.deleteById(idMetodoPagoUsuario);
     }
 
 }

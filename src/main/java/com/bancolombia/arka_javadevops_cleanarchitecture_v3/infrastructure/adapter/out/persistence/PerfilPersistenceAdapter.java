@@ -50,8 +50,7 @@ public class PerfilPersistenceAdapter implements PerfilRepositoryPort {
 
     @Override
     public boolean existsById(int idPerfil) {
-        Optional<Perfil> perfil = this.findById(idPerfil);
-        return perfil.isPresent();
+        return this.findById(idPerfil).isPresent();
     }    
 
     @Override

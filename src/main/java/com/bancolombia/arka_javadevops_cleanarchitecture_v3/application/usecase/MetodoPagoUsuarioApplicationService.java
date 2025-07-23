@@ -1,6 +1,7 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.application.usecase;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,44 @@ public class MetodoPagoUsuarioApplicationService implements MetodoPagoUsuarioUse
     }
 
     @Override
-    public ResponseObject<MetodoPagoUsuario> createMetodoPagoUsuario(int idMetodoPago, int idUsuario) {
+    public ResponseObject<MetodoPagoUsuario> createMetodoPagoUsuario(int idUsuario, int idMetodoPago) {
+        rObj = new ResponseObject<>();
+
+        if(!usuarioRepositoryPort.existsById(idUsuario)){
+            rObj.setAsNotSuccessful("No existe el Metodo de pago con id " + idUsuario);
+            return rObj;
+        }
+
+        if(!metodoPagoRepositoryPort.existsById(idMetodoPago)){
+            rObj.setAsNotSuccessful("No existe el Metodo de pago con id " + idMetodoPago);
+            return rObj;
+        }
+
+        if(metodoPagoUsuarioRepositoryPort.existByIdUsuarioAndMetodoPago(idUsuario, idMetodoPago)){
+            rObj.setAsNotSuccessful("Ya existe la asignacion");
+            return rObj;
+        }
+
+        MetodoPagoUsuario metodoPagoUsuario = new MetodoPagoUsuario();
+
+        Usuario usuarioMetodoPago = new Usuario();
+        usuarioMetodoPago.setIdUsuario(idUsuario);
+        MetodoPago metodoPago = new MetodoPago();
+        metodoPago.setIdMetodoPago(idMetodoPago);
+
+        metodoPagoUsuario.setUsuarioMetodoPago(usuarioMetodoPago);
+        metodoPagoUsuario.setMetodoPago(metodoPago);
+
+        rObj.setAsSuccessful("Se agrego el metodo de pago al usuario con exito"
+                            , metodoPagoUsuarioRepositoryPort.save(metodoPagoUsuario));
+
+        return rObj;
+    }
+
+    @Override
+    public ResponseObject<MetodoPagoUsuario> manageMetodoPagoUsuario(int idUsuario, int idMetodoPago,
+            double valorCuenta) {
+
         rObj = new ResponseObject<>();
 
         if(!metodoPagoRepositoryPort.existsById(idMetodoPago)){
@@ -46,45 +84,43 @@ public class MetodoPagoUsuarioApplicationService implements MetodoPagoUsuarioUse
             return rObj;
         }
 
+        if(valorCuenta <= 0){
+            rObj.setAsNotSuccessful("El valor a cargar debe ser mayor a cero");
+            return rObj;
+        }
+
         MetodoPagoUsuario metodoPagoUsuario = new MetodoPagoUsuario();
+        Usuario usuarioMetodoPago = new Usuario();
+        usuarioMetodoPago.setIdUsuario(idUsuario);
         MetodoPago metodoPago = new MetodoPago();
-        Usuario usuario = new Usuario();
-
         metodoPago.setIdMetodoPago(idMetodoPago);
-        usuario.setIdUsuario(idUsuario);
+
+        metodoPagoUsuario.setUsuarioMetodoPago(usuarioMetodoPago);
         metodoPagoUsuario.setMetodoPago(metodoPago);
-        metodoPagoUsuario.setUsuarioMetodoPago(usuario);
+        metodoPagoUsuario.setValorCuentaMetodoPago(valorCuenta);
 
-        rObj.setAsSuccessful("Se agrego el metodo de pago al usuario con exito"
-                            , metodoPagoUsuarioRepositoryPort.save(metodoPagoUsuario));
+        Optional<MetodoPagoUsuario> metodoPagoUsuarioFinded = metodoPagoUsuarioRepositoryPort.findByIdUsuarioAndIdMetodoPago(idUsuario, idMetodoPago);
+        String msg = "Se agrego el metodo de pago al usuario con exito";
 
+        if(metodoPagoUsuarioFinded.isPresent()){
+            metodoPagoUsuario.setId(metodoPagoUsuarioFinded.get().getId());
+            metodoPagoUsuario.setValorCuentaMetodoPago(metodoPagoUsuarioFinded.get().getValorCuentaMetodoPago() + valorCuenta);
+            msg = "Se realizó la actualizacíon con exíto";
+        }
+
+        rObj.setAsSuccessful(msg ,metodoPagoUsuarioRepositoryPort.save(metodoPagoUsuario));
         return rObj;
     }
 
     @Override
-    public ResponseObject<MetodoPagoUsuario> updateValorCuentaById(int id, double valorCuenta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateValorCuentaById'");
-    }
-
-    @Override
-    public ResponseObject<MetodoPagoUsuario> updateValorCuentaByIdUsuarioIdMetodoPago(int idUsuario, int idMetodoCuenta,
-            double valorCuenta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateValorCuentaByIdUsuarioIdMetodoPago'");
-    }
-
-    @Override
-    public ResponseObject<MetodoPagoUsuario> deleteMetodoPagoUsuario(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteMetodoPagoUsuario'");
-    }
-
-    @Override
-    public ResponseObject<MetodoPagoUsuario> deleteValorCuentaByIdUsuarioIdMetodoPago(int idUsuario,
-            int idMetodoCuenta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteValorCuentaByIdUsuarioIdMetodoPago'");
+    public boolean deleteByIdUsuarioAndMetodoPago(int idUsuario,
+            int idMetodoPago) {
+        Optional<MetodoPagoUsuario> metodoPagoUsuario = metodoPagoUsuarioRepositoryPort.findByIdUsuarioAndIdMetodoPago(idUsuario, idMetodoPago);
+        if(metodoPagoUsuario.isPresent()){
+            metodoPagoUsuarioRepositoryPort.deleteById(metodoPagoUsuario.get().getId());
+            return true;
+        }
+        return false;
     }
 
 }
