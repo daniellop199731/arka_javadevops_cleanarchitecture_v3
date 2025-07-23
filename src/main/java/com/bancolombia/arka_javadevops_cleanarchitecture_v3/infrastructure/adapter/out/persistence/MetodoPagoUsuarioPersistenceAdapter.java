@@ -37,7 +37,8 @@ public class MetodoPagoUsuarioPersistenceAdapter implements MetodoPagoUsuarioRep
         if(metodoPagoUsuario.getId() == 0){
             metodoPagoUsuarioEntity.setId(null);
         }
-        return metodoPagoUsuarioMapper.toModel(repository.save(metodoPagoUsuarioEntity));
+        repository.save(metodoPagoUsuarioEntity);
+        return metodoPagoUsuarioMapper.toModel(metodoPagoUsuarioEntity);
     }
 
     @Override

@@ -1,9 +1,14 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.out.persistence.entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +26,10 @@ public class MetodoPagoEntity {
     private Integer idMetodoPago;
 
     private String nombreMetodoPago;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "metodoPago")
+    private List<MetodoPagoUsuarioEntity> metodosPagoUsuario;
 
 }
 
