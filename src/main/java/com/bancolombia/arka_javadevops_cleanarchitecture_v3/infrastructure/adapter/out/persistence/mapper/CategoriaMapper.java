@@ -1,8 +1,11 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.out.persistence.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Categoria;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.out.persistence.entity.CategoriaEntity;
 
+@Component
 public class CategoriaMapper {
 
     public Categoria toModel(CategoriaEntity categoriaEntity){
