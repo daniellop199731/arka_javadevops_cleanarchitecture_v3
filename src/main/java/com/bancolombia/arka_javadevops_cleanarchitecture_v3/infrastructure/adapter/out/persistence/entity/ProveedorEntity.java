@@ -2,7 +2,6 @@ package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adap
 
 import java.util.List;
 
-import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Producto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -34,6 +33,6 @@ public class ProveedorEntity {
 
     @JsonBackReference
     @OneToMany(mappedBy = "proveedorProducto")
-    private List<Producto> productos;
+    private List<ProductoEntity> productos;
 
 }
