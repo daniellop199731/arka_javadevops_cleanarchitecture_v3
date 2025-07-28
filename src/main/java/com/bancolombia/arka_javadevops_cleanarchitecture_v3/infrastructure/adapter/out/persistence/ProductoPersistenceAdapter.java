@@ -33,7 +33,7 @@ public class ProductoPersistenceAdapter implements ProductoRepositoryPort {
 
     @Override
     public Producto save(Producto producto) {
-        ProductoEntity productoEntity = new ProductoEntity();
+        ProductoEntity productoEntity = mapper.toEntity(producto);
         if(producto.getIdProducto() == 0){
             productoEntity.setIdProducto(null);
         }
