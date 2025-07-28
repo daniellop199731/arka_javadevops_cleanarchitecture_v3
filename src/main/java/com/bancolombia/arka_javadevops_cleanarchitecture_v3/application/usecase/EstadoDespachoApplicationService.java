@@ -1,6 +1,7 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.application.usecase;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,11 @@ public class EstadoDespachoApplicationService implements EstadoDespachoUseCase {
 
     @Override
     public EstadoDespacho getEstadoDespacho(int idEstadoDespacho) {
-        return estadoDespachoRepositoryPort.findById(idEstadoDespacho).get();
+        Optional<EstadoDespacho> estadoDespachoFinded = estadoDespachoRepositoryPort.findById(idEstadoDespacho);
+        if(estadoDespachoFinded.isPresent()){
+            return estadoDespachoFinded.get();
+        }
+        return new EstadoDespacho();
     }
 
     @Override
