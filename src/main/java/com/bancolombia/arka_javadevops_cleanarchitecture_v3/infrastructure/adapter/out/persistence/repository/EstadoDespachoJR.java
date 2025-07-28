@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.out.persistence.entity.EstadoDespachoEntity;
 
 @Repository
-public interface EstadoDespachoJpaRepository extends JpaRepository<EstadoDespachoEntity, Integer> {
+public interface EstadoDespachoJR extends JpaRepository<EstadoDespachoEntity, Integer> {
 
 }
