@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EstadoDespacho {
+public class EstadoDespachoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

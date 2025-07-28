@@ -8,7 +8,7 @@ import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.EstadoD
 public interface EstadoDespachoRepositoryPort {
 
     List<EstadoDespacho> findAll();
-    Optional<EstadoDespacho> findById();
+    Optional<EstadoDespacho> findById(int idEstadoDespacho);
     EstadoDespacho save(EstadoDespacho estadoDespacho);
     void deleteById(int idEstadoDespacho);
     boolean existById(int idEstadoDespacho);
