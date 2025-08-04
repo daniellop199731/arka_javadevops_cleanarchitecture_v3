@@ -12,6 +12,7 @@ import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapt
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.mapper.ProductoWebMapper;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -90,13 +91,13 @@ public class ProductoApplicationService implements ProductoUseCase {
     }
 
     @Override
+    public Flux<Producto> reactiveGetAllProductos() {
+        return Flux.fromIterable(productoRepositoryPort.findAll());
+    }    
+
+    @Override
     public Mono<ProductoDto> getProductoByIdReactive(int idProducto) {
         return Mono.fromCallable(()->{
-            try{
-                Thread.sleep(100);
-            } catch (InterruptedException e){
-                Thread.currentThread().interrupt();
-            }
             Optional<Producto> productoFinded = productoRepositoryPort.findById(idProducto);
             if(productoFinded.isPresent()){
                 return productoWebMapper.toDto(productoFinded.get());
