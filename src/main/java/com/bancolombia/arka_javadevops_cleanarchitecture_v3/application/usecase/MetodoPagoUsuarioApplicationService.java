@@ -38,7 +38,7 @@ public class MetodoPagoUsuarioApplicationService implements MetodoPagoUsuarioUse
         rObj = new ResponseObject<>();
 
         if(!usuarioRepositoryPort.existsById(idUsuario)){
-            rObj.setAsNotSuccessful("No existe el Metodo de pago con id " + idUsuario);
+            rObj.setAsNotSuccessful("No existe el Usuario con id " + idUsuario);
             return rObj;
         }
 
