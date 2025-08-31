@@ -10,10 +10,13 @@ import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapt
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.List;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,10 +67,18 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping(path = "/reactive", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public ResponseEntity<Flux<ProductoDto>> reactiveGetAllProductos() {
+        Flux<ProductoDto> productosDto = productoUseCase.reactiveGetAllProductos()
+            .map(producto -> mapper.toDto(producto))
+            .delayElements(Duration.ofSeconds(1));
+        return ResponseEntity.ok(productosDto);
+    }    
+
     @GetMapping("/reactive/{idProducto}")
-    public Mono<ProductoDto> getProductoReactive(@PathVariable("idProducto") int idProducto) {
-        return productoUseCase.getProductoByIdReactive(idProducto)
-                .doOnNext(response-> System.out.println("Se obtiene el producto: " + response.getNombreProducto()));
+    public ResponseEntity<Mono<ProductoDto>> getProductoReactive(@PathVariable("idProducto") int idProducto) {
+        Mono<ProductoDto> productoDto = productoUseCase.getProductoByIdReactive(idProducto);
+        return ResponseEntity.ok(productoDto);
     }    
     
     @GetMapping("/price/reactive/{idProducto}")
