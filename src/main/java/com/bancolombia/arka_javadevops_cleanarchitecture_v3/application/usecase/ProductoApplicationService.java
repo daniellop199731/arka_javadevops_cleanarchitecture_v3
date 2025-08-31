@@ -8,14 +8,19 @@ import org.springframework.stereotype.Service;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Producto;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.ProductoUseCase;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.out.ProductoRepositoryPort;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.dto.ProductoDto;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.mapper.ProductoWebMapper;
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @RequiredArgsConstructor
 public class ProductoApplicationService implements ProductoUseCase {
 
     private final ProductoRepositoryPort productoRepositoryPort;
+    private final ProductoWebMapper productoWebMapper;
 
     @Override
     public List<Producto> getAllProductos() {
@@ -84,5 +89,42 @@ public class ProductoApplicationService implements ProductoUseCase {
         }
         return new Producto();
     }
+
+    @Override
+    public Flux<Producto> reactiveGetAllProductos() {
+        return Flux.fromIterable(productoRepositoryPort.findAll());
+    }      
+
+    @Override
+    public Mono<ProductoDto> getProductoByIdReactive(int idProducto) {
+        return Mono.fromCallable(()->{
+            Optional<Producto> productoFinded = productoRepositoryPort.findById(idProducto);
+            if(productoFinded.isPresent()){
+                return productoWebMapper.toDto(productoFinded.get());
+            }
+            return productoWebMapper.toDto(new Producto());
+            
+        })
+        .doOnSuccess(p -> System.out.println("Producto encontrado " + p.getIdProducto()))
+        .doOnError(erro -> System.out.println("Error en la operacion: " + erro.getMessage()));
+    }
+
+    @Override
+    public Mono<Double> getPrice(int idProducto) {
+        return Mono.fromCallable(()->{
+            try{
+                Thread.sleep(100);
+            } catch (InterruptedException e){
+                Thread.currentThread().interrupt();
+            }
+            Optional<Producto> productoFinded = productoRepositoryPort.findById(idProducto);
+            if(productoFinded.isPresent()){
+                return productoFinded.get().getPrecioProducto();
+            }
+            return 0.0;            
+        })
+        .doOnSuccess(response -> System.out.println("Consulta ejecutada con exito"))
+        .doOnError(erro -> System.out.println("Error en la operacion: " + erro.getMessage()));
+    }    
 
 }
