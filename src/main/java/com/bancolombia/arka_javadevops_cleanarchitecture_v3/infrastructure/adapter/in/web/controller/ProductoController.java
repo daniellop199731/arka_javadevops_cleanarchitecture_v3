@@ -10,6 +10,7 @@ import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapt
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -62,5 +63,16 @@ public class ProductoController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/reactive/{idProducto}")
+    public Mono<ProductoDto> getProductoReactive(@PathVariable("idProducto") int idProducto) {
+        return productoUseCase.getProductoByIdReactive(idProducto)
+                .doOnNext(response-> System.out.println("Se obtiene el producto: " + response.getNombreProducto()));
+    }    
+    
+    @GetMapping("/price/reactive/{idProducto}")
+    public Mono<Double> getPriceReactive(@PathVariable("idProducto") int idProducto) {
+        return productoUseCase.getPrice(idProducto).doOnError(error -> System.out.println(error.getMessage()));
+    }    
 
 }
