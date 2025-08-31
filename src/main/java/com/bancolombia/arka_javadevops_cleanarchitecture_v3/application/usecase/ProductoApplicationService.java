@@ -92,8 +92,10 @@ public class ProductoApplicationService implements ProductoUseCase {
 
     @Override
     public Flux<Producto> reactiveGetAllProductos() {
-        return Flux.fromIterable(productoRepositoryPort.findAll());
-    }      
+        return 
+            Flux.fromIterable(productoRepositoryPort.findAll())
+            .doOnError(error -> System.out.println("Error en la operacion: " + error.getMessage()));
+    }
 
     @Override
     public Mono<ProductoDto> getProductoByIdReactive(int idProducto) {

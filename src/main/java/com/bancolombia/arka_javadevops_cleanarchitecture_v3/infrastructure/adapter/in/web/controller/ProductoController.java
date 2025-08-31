@@ -67,12 +67,22 @@ public class ProductoController {
         return ResponseEntity.notFound().build();
     }
 
+    //Se retorna un ResponseEntity que contiene un Flux
+    //Flux, se entiende que se espera que se devolveran multiples elementos
     @GetMapping(path = "/reactive", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<Flux<ProductoDto>> reactiveGetAllProductos() {
         Flux<ProductoDto> productosDto = productoUseCase.reactiveGetAllProductos()
             .map(producto -> mapper.toDto(producto))
             .delayElements(Duration.ofSeconds(1));
         return ResponseEntity.ok(productosDto);
+    }    
+
+    //Mono, se entiende que se espera que se devolvera un solo elemento
+    @GetMapping(path = "/reactivev2")
+    public Mono<ResponseEntity<List<ProductoDto>>> reactiveGetAllProductosv2() {
+        List<Producto> productos = productoUseCase.getAllProductos();
+        List<ProductoDto> productosDto = productos.stream().map(mapper::toDto).toList();
+        return Mono.just(ResponseEntity.ok(productosDto));
     }    
 
     @GetMapping("/reactive/{idProducto}")
@@ -84,6 +94,6 @@ public class ProductoController {
     @GetMapping("/price/reactive/{idProducto}")
     public Mono<Double> getPriceReactive(@PathVariable("idProducto") int idProducto) {
         return productoUseCase.getPrice(idProducto).doOnError(error -> System.out.println(error.getMessage()));
-    }    
+    }     
 
 }
