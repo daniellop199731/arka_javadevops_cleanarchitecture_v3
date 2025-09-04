@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class Cotizacion {
 
     private List<ProductoCotizacion> productos;
+    private List<Integer> idsProductos;
 
 }

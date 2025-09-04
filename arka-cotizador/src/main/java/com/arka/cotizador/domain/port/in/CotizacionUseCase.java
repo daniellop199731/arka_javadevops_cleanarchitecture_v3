@@ -8,5 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface CotizacionUseCase {
 
-    Mono<CotizacionResponse> crearCotizacion(List<String> referenciasProductos);
+    Mono<Double> totalPriceProducts(List<Integer> idsProductos);
+
+    Mono<CotizacionResponse> crearCotizacion(List<Integer> idsProductos);
 }
