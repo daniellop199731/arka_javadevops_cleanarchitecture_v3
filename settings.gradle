@@ -3,6 +3,3 @@ rootProject.name = 'arka_javadevops_cleanarchitecture_v3'
 // Módulos del proyecto
 include 'arka-cotizador'
 //include 'arca-gestor-solicitudes'
-include 'eureka-server'
-include 'api-gateway'
-include 'hello-world-service'
