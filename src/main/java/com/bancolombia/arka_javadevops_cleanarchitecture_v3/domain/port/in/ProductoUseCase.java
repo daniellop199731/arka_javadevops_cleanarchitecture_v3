@@ -3,7 +3,7 @@ package com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in;
 import java.util.List;
 
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Producto;
-import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.dto.ProductoDto;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.dto.ProductoDto;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

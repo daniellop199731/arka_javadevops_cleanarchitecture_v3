@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Producto;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.ProductoUseCase;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.out.ProductoRepositoryPort;
-import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.dto.ProductoDto;
-import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.web.mapper.ProductoWebMapper;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.dto.ProductoDto;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.mapper.ProductoWebMapper;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
