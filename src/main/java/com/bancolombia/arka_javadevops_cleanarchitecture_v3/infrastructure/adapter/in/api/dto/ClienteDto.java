@@ -12,32 +12,32 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UsuarioDto {
+public class ClienteDto {
 
-    private int idUsuario;
+    private int idCliente;
 
     @NotNull(message = "Debe proporcionar una ideantificacion")
     @NotBlank(message = "Debe proporcionar una ideantificacion")
     @Size(min = 9, max = 15, message = "Debe proporcionar una ideantificacion valida")
-    private String identificacionUsuario;
+    private String identificacionCliente;
 
     @NotNull(message = "Debe proporcionar un correo electronico")
     @NotBlank(message = "Debe proporcionar un correo electronico")
     @Email(message = "Debe proporcionar una direccion de correo con una estructura valida")    
-    private String correoElectronicoUsuario;
+    private String correoElectronicoCliente;
 
     @NotNull(message = "Debe proporcionar los nombres")
     @NotBlank(message = "Debe proporcionar los nombres")
     @Size(min = 3, max = 45)
-    private String nombresUsuario;
+    private String nombresCliente;
 
     @NotNull(message = "Debe proporcionar los apellidos")   
     @NotBlank(message = "Debe proporcionar los apellidos")   
     @Size(min = 5, max = 45)
-    private String apellidosUsuario;
+    private String apellidosCliente;
 
-    private String direccionDespachoUsuario;
-    private String nicknameUsuario;
+    private String direccionDespachoCliente;
+    private String nicknameCliente;
     private PerfilDto perfil;    
 
 }
