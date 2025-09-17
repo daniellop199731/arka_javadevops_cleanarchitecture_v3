@@ -29,7 +29,7 @@ public class MetodoPagoEntity {
 
     @JsonIgnore
     @OneToMany(mappedBy = "metodoPago")
-    private List<MetodoPagoUsuarioEntity> metodosPagoUsuario;
+    private List<MetodoPagoClienteEntity> metodosPagoCliente;
 
 }
 

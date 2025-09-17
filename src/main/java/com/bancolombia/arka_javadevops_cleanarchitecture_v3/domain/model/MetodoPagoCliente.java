@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MetodoPagoUsuario {
+public class MetodoPagoCliente {
 
     private int id;
-    private Usuario usuarioMetodoPago;
+    private Cliente clienteMetodoPago;
     private MetodoPago metodoPago;
     private double valorCuentaMetodoPago;
 

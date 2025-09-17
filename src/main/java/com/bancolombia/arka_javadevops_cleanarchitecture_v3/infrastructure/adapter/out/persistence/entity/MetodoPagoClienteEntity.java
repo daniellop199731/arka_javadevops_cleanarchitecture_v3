@@ -15,12 +15,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "metodosPagoUsuario")
+@Table(name = "metodosPagoCliente")
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MetodoPagoUsuarioEntity {
+public class MetodoPagoClienteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,8 @@ public class MetodoPagoUsuarioEntity {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "idUsuarioMetodoPago")
-    private UsuarioEntity usuarioMetodoPago;
+    @JoinColumn(name = "idClienteMetodoPago")
+    private ClienteEntity clienteMetodoPago;
 
     @ManyToOne
     @JoinColumn(name = "idMetodoPago")

@@ -17,31 +17,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "clientes")
 
 @Data
 @NoArgsConstructor 
 @AllArgsConstructor
-public class UsuarioEntity {
+public class ClienteEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idUsuario;
+    private Integer idCliente;
 
-    private String identificacionUsuario;
-    private String correoElectronicoUsuario;
-    private String nombresUsuario;
-    private String apellidosUsuario;
-    private String direccionDespachoUsuario;
-    private String contrasennaUsuario;
-    private String nicknameUsuario;
+    private String identificacionCliente;
+    private String correoElectronicoCliente;
+    private String nombresCliente;
+    private String apellidosCliente;
+    private String direccionDespachoCliente;
+    private String contrasennaCliente;
+    private String nicknameCliente;
 
     @ManyToOne
-    @JoinColumn(name = "idPerfilUsuario")
+    @JoinColumn(name = "idPerfilCliente")
     private PerfilEntity perfil;    
 
     @JsonIgnore
-    @OneToMany(mappedBy = "usuarioMetodoPago")
-    private List<MetodoPagoUsuarioEntity> metodsPagoUsuario;
+    @OneToMany(mappedBy = "clienteMetodoPago")
+    private List<MetodoPagoClienteEntity> metodosPagoCliente;
 }
 
