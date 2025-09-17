@@ -1,7 +1,7 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.dto;
 
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.MetodoPago;
-import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Usuario;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Cliente;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MetodoPagoUsuarioDto {
+public class MetodoPagoClienteDto {
 
     private int id;
 
-    @NotNull(message = "El usuario del metodo de pago no puede ser nulo")
-    private Usuario usuarioMetodoPago;
+    @NotNull(message = "El Cliente del metodo de pago no puede ser nulo")
+    private Cliente ClienteMetodoPago;
 
     @NotNull(message = "El metodo de pago no puede ser nulo")
     private MetodoPago metodoPago;
