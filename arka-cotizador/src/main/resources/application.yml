@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: arka-cotizador
+  main:
+    allow-bean-definition-overriding: true
 
 eureka:
   client:

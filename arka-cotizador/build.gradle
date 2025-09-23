@@ -5,6 +5,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'io.projectreactor:reactor-core'	    
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -13,6 +14,19 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     annotationProcessor 'org.projectlombok:lombok'
+
+    // Spring Security dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server'
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'org.springframework.security:spring-security-crypto'    
+
+    // Módulo de seguridad común
+    implementation project(':arka-security-common')
 }
 
 jar {
@@ -21,5 +35,4 @@ jar {
 
 bootJar {
     enabled = true
-    archiveFileName = 'hello-world-service.jar'
 }

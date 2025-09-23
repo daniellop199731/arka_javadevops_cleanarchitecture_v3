@@ -31,6 +31,7 @@ public class GatewaySecurityConfig {
                         // Endpoints publicos
                         .pathMatchers("/auth").permitAll()
                         .pathMatchers("/eureka/**").permitAll()
+                        //Todos los demas endpoints requieren autenticacion
                         .anyExchange().authenticated()                        
                 )
                 .build();

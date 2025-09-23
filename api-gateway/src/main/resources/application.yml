@@ -11,13 +11,13 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        #- id: cotizador-service
-        #  uri: lb://arca-cotizador
-        #  predicates:
-        #    - Path=/api/cotizador/**
-        #  filters:
-        #    - StripPrefix=2
-        #    
+        - id: cotizador-service
+          uri: lb://arka-cotizador
+          predicates:
+            - Path=/api/cotizador/**
+          filters:
+            - StripPrefix=2
+            
         #- id: gestor-solicitudes-service
         #  uri: lb://arca-gestor-solicitudes
         #  predicates:

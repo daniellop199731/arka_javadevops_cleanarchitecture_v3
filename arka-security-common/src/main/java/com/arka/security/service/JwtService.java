@@ -26,11 +26,16 @@ public class JwtService {
     @Value("${arka.security.jwt.secret:ArkaSecretKeyForJWTTokenGenerationAndValidation2024!}")
     private String secretKey;
     
-    @Value("${arka.security.jwt.expiration:86400}")  // 24 horas en segundos
+    //Tiempo de expiracion del token
+    @Value("${arka.security.jwt.expiration:30}")  // 30 segundos
     private long jwtExpiration;
     
-    @Value("${arka.security.jwt.refresh-expiration:604800}")  // 7 días en segundos
+    //Tiempo de expiracion del refresh token
+    @Value("${arka.security.jwt.refresh-expiration:120}")  // 2 minuto en segundos
     private long refreshExpiration;
+
+    //Cada 30 segundos se renueva el token, pero despues de 2 minutos
+    //la sesion expira y se debe hacer login nuevamente
     
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes());

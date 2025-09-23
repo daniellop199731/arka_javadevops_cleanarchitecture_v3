@@ -18,7 +18,7 @@ public class GatewayConfig {
                 .uri("lb://hello-world-service")
             )
             // Cotizador Service routes
-            .route("cotizador", r -> r
+            .route("arka-cotizador", r -> r
                 .path("/api/cotizador/**")
                 .filters(f -> f.stripPrefix(2))
                 .uri("lb://arka-cotizador")
