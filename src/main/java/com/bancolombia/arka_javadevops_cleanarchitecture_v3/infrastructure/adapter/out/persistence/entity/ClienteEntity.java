@@ -43,5 +43,9 @@ public class ClienteEntity {
     @JsonIgnore
     @OneToMany(mappedBy = "clienteMetodoPago")
     private List<MetodoPagoClienteEntity> metodosPagoCliente;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "clienteCarritoCompra")
+    private List<CarritoCompraEntity> carritosCompra;
 }
 
