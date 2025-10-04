@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -51,9 +53,9 @@ public class CarritoCompraEntity {
 
     private int cantidadNotificacionesPorCarritoAbandonado;
 
-    //@JsonIgnore
-    //@OneToMany(mappedBy = "carritoCompra")
-    //private List<CarritoCompraProducto> carritoCompraProductos;
+    @JsonIgnore
+    @OneToMany(mappedBy = "carritoCompra")
+    private List<CarritoCompraProductoEntity> carritoCompraProductos;
 
     @PrePersist
     public void toCreate(){

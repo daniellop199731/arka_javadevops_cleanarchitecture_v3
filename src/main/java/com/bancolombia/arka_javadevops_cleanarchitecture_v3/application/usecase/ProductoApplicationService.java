@@ -127,6 +127,11 @@ public class ProductoApplicationService implements ProductoUseCase {
         })
         .doOnSuccess(response -> System.out.println("Consulta ejecutada con exito"))
         .doOnError(erro -> System.out.println("Error en la operacion: " + erro.getMessage()));
+    }
+
+    @Override
+    public boolean existeProducto(int idProducto) {
+        return productoRepositoryPort.existById(idProducto);
     }    
 
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.CarritoCompra;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.CarritoCompraProducto;
 
 public interface CarritoCompraUseCase {
     
@@ -13,5 +14,7 @@ public interface CarritoCompraUseCase {
     CarritoCompra carritoActual(int idCliente);
     List<CarritoCompra> carritosAbandonados();
     List<CarritoCompra> carritoComprasPorFechas(Date startDate, Date finishDate);
+
+    List<CarritoCompraProducto> agregarProductos(int idCliente, List<CarritoCompraProducto> carritoCompraProductos);
 
 }

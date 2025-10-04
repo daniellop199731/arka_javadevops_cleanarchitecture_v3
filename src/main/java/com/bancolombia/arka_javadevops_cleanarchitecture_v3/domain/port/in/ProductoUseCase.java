@@ -17,6 +17,7 @@ public interface ProductoUseCase {
     boolean deleteProducto(int idProducto);
     Producto increaseStock(int idProducto, int stock);
     Producto decreaseStock(int idProducto, int stock);
+    boolean existeProducto(int idProducto);
 
     Flux<Producto> reactiveGetAllProductos();
     Mono<ProductoDto> getProductoByIdReactive(int idProducto);

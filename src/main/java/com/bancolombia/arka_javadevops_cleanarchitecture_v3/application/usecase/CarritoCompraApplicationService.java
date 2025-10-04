@@ -8,10 +8,13 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.CarritoCompra;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.CarritoCompraProducto;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.Cliente;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.EstadoDespacho;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.CarritoCompraUseCase;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.ClienteUserCase;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.ProductoUseCase;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.out.CarritoCompraProductoRepositoryPort;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.out.CarritoCompraRepositoryPort;
 
 import lombok.RequiredArgsConstructor;
@@ -21,8 +24,10 @@ import lombok.RequiredArgsConstructor;
 public class CarritoCompraApplicationService implements CarritoCompraUseCase {
 
     private final CarritoCompraRepositoryPort repositoryPort;
+    private final CarritoCompraProductoRepositoryPort carritoCompraProductoRepositoryPort;
 
     private final ClienteUserCase clienteUserCase;
+    private final ProductoUseCase productoUseCase;
 
     @Override
     public CarritoCompra crearNuevo(int idCliente) {
@@ -76,6 +81,39 @@ public class CarritoCompraApplicationService implements CarritoCompraUseCase {
     @Override
     public List<CarritoCompra> carritoComprasPorFechas(Date startDate, Date finishDate) {
         return repositoryPort.findByFechaCreacionCarritoCompraBetween(startDate, finishDate);
+    }
+
+    @Override
+    public List<CarritoCompraProducto> agregarProductos(int idCliente,
+            List<CarritoCompraProducto> carritoCompraProductos) {
+
+        List<CarritoCompraProducto> carritoCompraProductosResult = new ArrayList<>();
+        CarritoCompra carritoCompra = this.crearNuevo(idCliente);
+        
+        if(carritoCompra.getIdCarritoCompra() == 0){
+            return new ArrayList<>();
+        }
+
+        if(carritoCompraProductos.isEmpty()){
+            return new ArrayList<>();
+        }
+
+        for (CarritoCompraProducto carritoCompraProducto : carritoCompraProductos) {            
+
+            if(carritoCompraProducto.getUnidadesProducto() > 0
+                && productoUseCase.existeProducto(carritoCompraProducto.getProductoCarritoCompra().getIdProducto())){
+
+                carritoCompraProducto.setCarritoCompra(carritoCompra);
+                carritoCompraProductosResult.add(carritoCompraProducto);
+                productoUseCase.decreaseStock(
+                    carritoCompraProducto.getProductoCarritoCompra().getIdProducto()
+                    , carritoCompraProducto.getUnidadesProducto()
+                );
+            }
+
+        }
+
+        return carritoCompraProductoRepositoryPort.saveAllOriginal(carritoCompraProductosResult);
     }
     
 }

@@ -1,5 +1,7 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.dto;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -41,5 +43,7 @@ public class ProductoDto {
     
     @NotNull(message = "Debe proporcionar una categoria valida")
     private CategoriaDto categoriaProducto;
+
+    private List<CarritoCompraProductoDto> carritoCompraProductos;
 
 }
