@@ -3,10 +3,14 @@ package com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adap
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model.CarritoCompraProducto;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.port.in.CarritoCompraUseCase;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.dto.CarritoCompraDto;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.dto.CarritoCompraProductoDto;
+import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.mapper.CarritoCompraProductoWebMapper;
 import com.bancolombia.arka_javadevops_cleanarchitecture_v3.infrastructure.adapter.in.api.mapper.CarritoCompraWebMapper;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -15,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/carritosCompra")
@@ -22,7 +28,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class CarritoCompraController {
 
     private final CarritoCompraUseCase carritoCompraUseCase;
+
     private final CarritoCompraWebMapper carritoCompraWebMapper;
+    private final CarritoCompraProductoWebMapper carritoCompraProductoWebMapper;
 
     @GetMapping("/{idCarritoCompra}")
     public ResponseEntity<CarritoCompraDto> obtenerCarritoPorId(@PathVariable int idCarritoCompra) {        
@@ -66,6 +74,21 @@ public class CarritoCompraController {
             carritoCompraWebMapper.toDto(
                 carritoCompraUseCase.crearNuevo(idCliente)
             )
+        );
+    }
+    
+    @PostMapping("/agregarProductos/{idCliente}")
+    public ResponseEntity<List<CarritoCompraProductoDto>> postMethodName(@Valid
+            @PathVariable(value = "idCliente") int idCliente
+            , @RequestBody List<CarritoCompraProductoDto> carritoCompraProductosDto) {
+
+        List<CarritoCompraProducto> carritoCompraProductos = 
+            carritoCompraUseCase.agregarProductos(
+                idCliente
+                , carritoCompraProductosDto.stream().map(carritoCompraProductoWebMapper::toModel).toList());
+        
+        return ResponseEntity.ok().body(
+            carritoCompraProductos.stream().map(carritoCompraProductoWebMapper::toDto).toList()
         );
     }
     

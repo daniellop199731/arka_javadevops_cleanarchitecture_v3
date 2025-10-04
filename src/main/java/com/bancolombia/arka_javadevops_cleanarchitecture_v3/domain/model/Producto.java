@@ -1,5 +1,7 @@
 package com.bancolombia.arka_javadevops_cleanarchitecture_v3.domain.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,4 +21,5 @@ public class Producto {
     private Proveedor proveedorProducto;
     private int unidadesSolicitarProducto;
     private Categoria categoriaProducto;
+    private List<CarritoCompraProducto> carritoCompraProductos;
 }
