@@ -37,6 +37,7 @@ public class SpringSecurityConfig {
             //Rutas que no requieren autenticacion
             .requestMatchers(HttpMethod.GET,"/users").permitAll()
             .requestMatchers(HttpMethod.POST,"/users/register").permitAll()
+            .requestMatchers(HttpMethod.POST,"/users").permitAll()
             .requestMatchers(HttpMethod.GET,"/test").permitAll()
             //... espacio para mas ruras sin autenticacion si se requiere
             //Cualquier otra ruta requerira autenticacion
